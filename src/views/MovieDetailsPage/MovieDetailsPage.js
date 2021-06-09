@@ -3,6 +3,9 @@ import { NavLink, Route } from "react-router-dom";
 
 import fetchAPI from "../../services/fetchAPI";
 
+import Cast from "../Cast";
+import Reviews from "../Reviews";
+
 class MovieDetailsPage extends Component {
   state = {
     poster_path: null,
@@ -22,7 +25,6 @@ class MovieDetailsPage extends Component {
 
     const { poster_path, title, vote_average, overview, genres } = response;
 
-    console.log(response);
     this.setState({
       poster_path: `https://image.tmdb.org/t/p/w300${poster_path}`,
       title,
@@ -34,8 +36,7 @@ class MovieDetailsPage extends Component {
 
   render() {
     const { poster_path, title, vote_average, overview, genres } = this.state;
-    // console.log(this.props.match.url);
-
+    const { match } = this.props;
     return (
       <>
         <img src={poster_path} alt={title} />
@@ -51,18 +52,18 @@ class MovieDetailsPage extends Component {
         </ul>
         <ul>
           <li>
-            <NavLink className="NavLink" activeClassName="NavLink--active" to={`${this.props.match.url}/cast`}>
+            <NavLink className="NavLink" activeClassName="NavLink--active" to={`${match.url}/cast`}>
               Cast
             </NavLink>
           </li>
           <li>
-            <NavLink className="NavLink" activeClassName="NavLink--active" to={`${this.props.match.url}/reviews`}>
+            <NavLink className="NavLink" activeClassName="NavLink--active" to={`${match.url}/reviews`}>
               Review
             </NavLink>
           </li>
         </ul>
-        <Route path="/movies/:movieId/cast" component={() => <h1>cast</h1>}></Route>
-        <Route path="/movies/:movieId/reviews"></Route>
+        <Route path={`${match.path}/cast`} component={Cast}></Route>
+        <Route path={`${match.path}/reviews`} component={Reviews}></Route>
       </>
     );
   }
