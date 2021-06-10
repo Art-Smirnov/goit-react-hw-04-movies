@@ -18,9 +18,7 @@ class HomePage extends Component {
     this.setState({ movies: response });
   }
 
-  //TODO дізнатися як прибрати міфічний патерн movies
   render() {
-    // console.log(this.props.match.url);
     return (
       <>
         <h1>Trending today</h1>

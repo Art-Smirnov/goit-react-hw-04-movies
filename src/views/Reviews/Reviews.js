@@ -15,22 +15,24 @@ class Reviews extends Component {
     };
 
     const response = await fetchAPI.fetchMovieData(options);
-    // console.log(response);
     this.setState({ reviews: response });
   }
 
   render() {
+    const { reviews } = this.state;
     return (
-      <>
-        <ul>
-          {this.state.reviews.map(({ id, author, content }) => (
+      <ul>
+        {reviews.length > 0 ? (
+          reviews.map(({ id, author, content }) => (
             <li key={id}>
               <h3>Author: {author}</h3>
               <p>{content}</p>
             </li>
-          ))}
-        </ul>
-      </>
+          ))
+        ) : (
+          <p>We don't have any reviews for this movie.</p>
+        )}
+      </ul>
     );
   }
 }
