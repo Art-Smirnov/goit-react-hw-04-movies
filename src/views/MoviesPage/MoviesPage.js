@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 
 import fetchAPI from "../../services/fetchAPI";
+import Query from "../../components/Query";
 
 class MoviesPage extends Component {
   state = {
@@ -21,31 +23,41 @@ class MoviesPage extends Component {
     };
 
     const response = await fetchAPI.fetchMovieData(options);
-    console.log(response);
     this.setState({ movies: response });
-
+    this.onQueryChange();
     this.setState({ serchQuery: "" });
   };
 
-  render() {
-    const { serchQuery } = this.state;
-    return (
-      <header>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
-          </button>
+  onQueryChange = () => {
+    const { history, location } = this.props;
 
-          <input
-            type="text"
-            value={serchQuery}
-            onChange={this.handleChange}
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
+    history.push({ pathname: location.pathname, search: `search=${this.state.serchQuery}` });
+  };
+
+  render() {
+    const { serchQuery, movies } = this.state;
+    const { match } = this.props;
+
+    return (
+      <>
+        <header>
+          <form onSubmit={this.handleSubmit}>
+            <button type="submit">
+              <span>Search</span>
+            </button>
+
+            <input
+              type="text"
+              value={serchQuery}
+              onChange={this.handleChange}
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+            />
+          </form>
+        </header>
+        <Route path={`${match.path}`} render={(props) => <Query {...props} movies={movies} />} />
+      </>
     );
   }
 }

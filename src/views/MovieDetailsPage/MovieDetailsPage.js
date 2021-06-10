@@ -3,8 +3,8 @@ import { NavLink, Route } from "react-router-dom";
 
 import fetchAPI from "../../services/fetchAPI";
 
-import Cast from "../Cast";
-import Reviews from "../Reviews";
+import Cast from "../../components/Cast";
+import Reviews from "../../components/Reviews";
 
 class MovieDetailsPage extends Component {
   state = {
