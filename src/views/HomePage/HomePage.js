@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import fetchAPI from "../../services/fetchAPI";
+import MovieList from "../../components/MovieList";
 
 class HomePage extends Component {
   state = {
@@ -19,16 +19,11 @@ class HomePage extends Component {
   }
 
   render() {
+    const { movies } = this.state;
     return (
       <>
         <h1>Trending today</h1>
-        <ul>
-          {this.state.movies.map((movie) => (
-            <li key={movie.id}>
-              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-            </li>
-          ))}
-        </ul>
+        <MovieList movies={movies} />
       </>
     );
   }

@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 
 import fetchAPI from "../../services/fetchAPI";
-import Query from "../../components/Query";
+import MovieList from "../../components/MovieList";
 
 class MoviesPage extends Component {
   state = {
-    serchQuery: "",
+    searchQuery: "",
     movies: [],
   };
 
   handleChange = (e) => {
-    this.setState({ serchQuery: e.currentTarget.value });
+    this.setState({ searchQuery: e.currentTarget.value });
   };
 
   handleSubmit = async (e) => {
@@ -19,23 +19,24 @@ class MoviesPage extends Component {
 
     const options = {
       path: "search/movie",
-      query: this.state.serchQuery,
+      query: this.state.searchQuery,
     };
 
     const response = await fetchAPI.fetchMovieData(options);
     this.setState({ movies: response });
     this.onQueryChange();
-    this.setState({ serchQuery: "" });
+    this.setState({ searchQuery: "" });
   };
 
   onQueryChange = () => {
     const { history, location } = this.props;
+    console.log(history);
 
-    history.push({ pathname: location.pathname, search: `search=${this.state.serchQuery}` });
+    history.push({ pathname: location.pathname, search: `query=${this.state.searchQuery}` });
   };
 
   render() {
-    const { serchQuery, movies } = this.state;
+    const { searchQuery, movies } = this.state;
     const { match } = this.props;
 
     return (
@@ -48,7 +49,7 @@ class MoviesPage extends Component {
 
             <input
               type="text"
-              value={serchQuery}
+              value={searchQuery}
               onChange={this.handleChange}
               autoComplete="off"
               autoFocus
@@ -56,7 +57,7 @@ class MoviesPage extends Component {
             />
           </form>
         </header>
-        <Route path={`${match.path}`} render={(props) => <Query {...props} movies={movies} />} />
+        <Route path={`${match.path}`} render={(props) => <MovieList {...props} movies={movies} />} />
       </>
     );
   }

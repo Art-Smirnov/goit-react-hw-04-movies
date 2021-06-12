@@ -6,6 +6,8 @@ import fetchAPI from "../../services/fetchAPI";
 import Cast from "../../components/Cast";
 import Reviews from "../../components/Reviews";
 
+import routes from "../../routes";
+
 class MovieDetailsPage extends Component {
   state = {
     poster_path: null,
@@ -34,11 +36,20 @@ class MovieDetailsPage extends Component {
     });
   }
 
+  handleGoBack = () => {
+    const { history, location } = this.props;
+    history.push(location?.state?.from || routes.home);
+  };
+
   render() {
     const { poster_path, title, vote_average, overview, genres } = this.state;
     const { match } = this.props;
+
     return (
       <>
+        <button type="button" onClick={this.handleGoBack}>
+          Return
+        </button>
         <img src={poster_path} alt={title} />
         <h1>{title}</h1>
         <p>User score: {vote_average}</p>
