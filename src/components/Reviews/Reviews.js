@@ -11,7 +11,7 @@ class Reviews extends Component {
     const options = {
       path: "movie/",
       id: this.props.match.params.movieId,
-      param: "/reviews",
+      param: "/reviews?",
     };
 
     const response = await fetchAPI.fetchMovieData(options);

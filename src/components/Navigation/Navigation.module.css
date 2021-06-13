@@ -1,0 +1,19 @@
+.NavLinks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  max-width: 130px;
+}
+
+.NavLink {
+  font-size: 20px;
+  color: currentColor;
+}
+
+.NavLink__active {
+  color: tomato;
+}
+/*# sourceMappingURL=Navigation.module.css.map */

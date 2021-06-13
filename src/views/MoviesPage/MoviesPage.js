@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import queryString from "query-string";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 import fetchAPI from "../../services/fetchAPI";
 import MovieList from "../../components/MovieList";
+import Section from "../../components/Section";
 
 class MoviesPage extends Component {
   state = {
@@ -10,18 +13,31 @@ class MoviesPage extends Component {
     movies: [],
   };
 
+  async componentDidMount() {
+    const query = this.getQueryFromProps(this.props);
+    if (Object.keys(query).length === 0) {
+      return;
+    }
+    const { search } = this.props.location;
+
+    const options = {
+      path: "search/movie",
+      query: search,
+    };
+    const response = await fetchAPI.fetchMovieData(options);
+    this.setState({ movies: response });
+  }
+
   handleChange = (e) => {
     this.setState({ searchQuery: e.currentTarget.value });
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
     const options = {
       path: "search/movie",
-      query: this.state.searchQuery,
+      query: `?query=${this.state.searchQuery}`,
     };
-
     const response = await fetchAPI.fetchMovieData(options);
     this.setState({ movies: response });
     this.onQueryChange();
@@ -30,35 +46,31 @@ class MoviesPage extends Component {
 
   onQueryChange = () => {
     const { history, location } = this.props;
-    console.log(history);
 
     history.push({ pathname: location.pathname, search: `query=${this.state.searchQuery}` });
   };
 
+  getQueryFromProps = (props) => queryString.parse(props.location.search);
+
   render() {
     const { searchQuery, movies } = this.state;
-    const { match } = this.props;
-
     return (
-      <>
-        <header>
-          <form onSubmit={this.handleSubmit}>
-            <button type="submit">
-              <span>Search</span>
-            </button>
+      <Section>
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            type="search"
+            value={searchQuery}
+            onChange={this.handleChange}
+            autoComplete="off"
+            placeholder="Search movies"
+          />
+          <Button size="small" variant="contained" color="primary" type="submit">
+            Search
+          </Button>
+        </form>
 
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={this.handleChange}
-              autoComplete="off"
-              autoFocus
-              placeholder="Search images and photos"
-            />
-          </form>
-        </header>
-        <Route path={`${match.path}`} render={(props) => <MovieList {...props} movies={movies} />} />
-      </>
+        {movies && <MovieList movies={movies} />}
+      </Section>
     );
   }
 }

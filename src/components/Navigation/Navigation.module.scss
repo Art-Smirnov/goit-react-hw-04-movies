@@ -1,0 +1,14 @@
+.NavLinks {
+  display: flex;
+  justify-content: space-between;
+  max-width: 130px;
+}
+
+.NavLink {
+  font-size: 20px;
+  color: currentColor;
+
+  &__active {
+    color: tomato;
+  }
+}

@@ -11,7 +11,7 @@ class Cast extends Component {
     const options = {
       path: "movie/",
       id: this.props.match.params.movieId,
-      param: "/credits",
+      param: "/credits?",
     };
 
     const response = await fetchAPI.fetchMovieData(options);

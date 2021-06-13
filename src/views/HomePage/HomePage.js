@@ -11,6 +11,7 @@ class HomePage extends Component {
   async componentDidMount() {
     const options = {
       path: "trending/movie/week",
+      param: "?",
     };
 
     const response = await fetchAPI.fetchMovieData(options);
