@@ -11,6 +11,7 @@ class MoviesPage extends Component {
   state = {
     searchQuery: "",
     movies: [],
+    error: null,
   };
 
   async componentDidMount() {
@@ -24,12 +25,17 @@ class MoviesPage extends Component {
       path: "search/movie",
       query: search,
     };
-    const response = await fetchAPI.fetchMovieData(options);
-    this.setState({ movies: response });
+
+    try {
+      const response = await fetchAPI.fetchMovieData(options);
+      this.setState({ movies: response });
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   handleChange = (e) => {
-    this.setState({ searchQuery: e.currentTarget.value });
+    this.setState({ searchQuery: e.currentTarget.value, movies: [], error: null });
   };
 
   handleSubmit = async (e) => {
@@ -38,9 +44,14 @@ class MoviesPage extends Component {
       path: "search/movie",
       query: `?query=${this.state.searchQuery}`,
     };
-    const response = await fetchAPI.fetchMovieData(options);
-    this.setState({ movies: response });
-    this.onQueryChange();
+
+    try {
+      const response = await fetchAPI.fetchMovieData(options);
+      this.setState({ movies: response });
+      this.onQueryChange();
+    } catch (error) {
+      this.setState({ error });
+    }
     this.setState({ searchQuery: "" });
   };
 
@@ -53,7 +64,8 @@ class MoviesPage extends Component {
   getQueryFromProps = (props) => queryString.parse(props.location.search);
 
   render() {
-    const { searchQuery, movies } = this.state;
+    const { searchQuery, movies, error } = this.state;
+
     return (
       <Section>
         <form onSubmit={this.handleSubmit}>
@@ -68,8 +80,8 @@ class MoviesPage extends Component {
             Search
           </Button>
         </form>
-
-        {movies && <MovieList movies={movies} />}
+        {error && <p>Whoops, something went wrong: {error.message}</p>}
+        {movies.length > 0 && <MovieList movies={movies} />}
       </Section>
     );
   }

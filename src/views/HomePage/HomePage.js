@@ -24,7 +24,7 @@ class HomePage extends Component {
     return (
       <>
         <h1>Trending today</h1>
-        <MovieList movies={movies} />
+        {movies.length > 0 && <MovieList movies={movies} />}
       </>
     );
   }
