@@ -16,7 +16,7 @@ const AdditionalInfo = ({ match, location }) => {
             activeClassName="NavLink--active"
             to={{
               pathname: `${match.url}/cast`,
-              state: { from: location },
+              state: { from: location?.state?.from },
             }}
           >
             Cast
@@ -28,7 +28,7 @@ const AdditionalInfo = ({ match, location }) => {
             activeClassName="NavLink--active"
             to={{
               pathname: `${match.url}/reviews`,
-              state: { from: location },
+              state: { from: location?.state?.from },
             }}
           >
             Review

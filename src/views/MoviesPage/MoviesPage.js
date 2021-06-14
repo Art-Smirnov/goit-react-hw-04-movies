@@ -16,6 +16,7 @@ class MoviesPage extends Component {
 
   async componentDidMount() {
     const query = this.getQueryFromProps(this.props);
+
     if (Object.keys(query).length === 0) {
       return;
     }
@@ -35,7 +36,11 @@ class MoviesPage extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({ searchQuery: e.currentTarget.value, movies: [], error: null });
+    this.setState({
+      searchQuery: e.currentTarget.value,
+      movies: [],
+      error: null,
+    });
   };
 
   handleSubmit = async (e) => {
@@ -58,7 +63,10 @@ class MoviesPage extends Component {
   onQueryChange = () => {
     const { history, location } = this.props;
 
-    history.push({ pathname: location.pathname, search: `query=${this.state.searchQuery}` });
+    history.push({
+      pathname: location.pathname,
+      search: `query=${this.state.searchQuery}`,
+    });
   };
 
   getQueryFromProps = (props) => queryString.parse(props.location.search);
@@ -76,7 +84,12 @@ class MoviesPage extends Component {
             autoComplete="off"
             placeholder="Search movies"
           />
-          <Button size="small" variant="contained" color="primary" type="submit">
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
             Search
           </Button>
         </form>

@@ -40,7 +40,6 @@ class MovieDetailsPage extends Component {
   }
 
   handleGoBack = () => {
-    console.log(this.state);
     const { history, location } = this.props;
     history.push(location?.state?.from || routes.home);
   };
@@ -48,8 +47,7 @@ class MovieDetailsPage extends Component {
   render() {
     const { poster_path, title, release_date, vote_average, overview, genres } =
       this.state;
-    const movieDetailsLocation = this.props.location;
-    console.log(movieDetailsLocation);
+
     return (
       <Section>
         <Button
