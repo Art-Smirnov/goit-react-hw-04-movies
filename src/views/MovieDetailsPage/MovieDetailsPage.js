@@ -26,7 +26,8 @@ class MovieDetailsPage extends Component {
     };
 
     const response = await fetchAPI.fetchMovieData(options);
-    const { poster_path, title, vote_average, overview, genres, release_date } = response;
+    const { poster_path, title, vote_average, overview, genres, release_date } =
+      response;
 
     this.setState({
       poster_path: `https://image.tmdb.org/t/p/w300${poster_path}`,
@@ -39,12 +40,14 @@ class MovieDetailsPage extends Component {
   }
 
   handleGoBack = () => {
+    console.log(this.state);
     const { history, location } = this.props;
     history.push(location?.state?.from || routes.home);
   };
 
   render() {
-    const { poster_path, title, release_date, vote_average, overview, genres } = this.state;
+    const { poster_path, title, release_date, vote_average, overview, genres } =
+      this.state;
     const movieDetailsLocation = this.props.location;
     console.log(movieDetailsLocation);
     return (

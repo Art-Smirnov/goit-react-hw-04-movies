@@ -5,8 +5,7 @@ import Reviews from "../../components/Reviews";
 
 import styles from "./AdditionalInfo.module.scss";
 
-const AdditionalInfo = ({ match, location, history }) => {
-  // console.log(location);
+const AdditionalInfo = ({ match, location }) => {
   return (
     <div className={styles.AdditionalInfo}>
       <h3>Additional information</h3>
