@@ -29,7 +29,7 @@ class MoviesPage extends Component {
 
     try {
       const response = await fetchAPI.fetchMovieData(options);
-      this.setState({ movies: response });
+      this.setState({ movies: response, searchQuery: query.query });
     } catch (error) {
       this.setState({ error });
     }
